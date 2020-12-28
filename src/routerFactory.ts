@@ -12,6 +12,7 @@ const route404 = {
     path: '*',
     handler: (stream: ServerHttp2Stream) => {
         stream.respond({[HTTP2_HEADER_STATUS]: 404});
+        stream.end();
     }
 }
 
