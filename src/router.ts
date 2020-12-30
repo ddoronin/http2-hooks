@@ -20,6 +20,7 @@ export function routeMatcher<S, H>(router: Router<S, H>) {
         for (let i = 0; i < matchers.length; i++) {
             const {route, parse} = matchers[i];
             if (route.method === reqMethod && typeof parse === 'function') {
+                console.log('reqPath', reqPath);
                 const params = parse('https://localhost' + reqPath);
                 if (params) return [route, params];
             }
