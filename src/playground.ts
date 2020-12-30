@@ -16,7 +16,6 @@ const staticPath = path.resolve(__dirname, './static');
 
 const router = new RouterFactory();
 router.get("/hello", (stream) => {
-    stream.pipe(process.stdout);
     stream.respond({ ":status": 200 });
     stream.write("hello world!");
     stream.end();
@@ -26,14 +25,16 @@ router.get("/world", (stream) => {
     stream.pipe(process.stdout);
 });
 
-router.post("/upload", (stream) => {
-    stream.end();
+router.post("/upload/:file", (stream, headers) => {
+    const fullPath = path.join(staticPath, headers[':path'] as string);
+    const fswrite = fs.createWriteStream(fullPath)
+    stream.pipe(fswrite)
 });
 
 router.get("/:file", (stream, headers) => {
     const fullPath = path.join(staticPath, headers[':path'] as string);
     const responseMimeType = mime.lookup(fullPath);
-    stream.respondWithFile(fullPath, { 'content-type': responseMimeType as string });
+    fs.createReadStream(fullPath).pipe(stream).respond({ 'content-type': responseMimeType as string });
 });
 
 useHttp2Server(server, [
