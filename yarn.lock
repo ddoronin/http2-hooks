@@ -49,6 +49,11 @@ mime-types@^2.1.27:
   dependencies:
     mime-db "1.44.0"
 
+path-to-regexp@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.0.tgz#f7b3803336104c346889adece614669230645f38"
+  integrity sha512-f66KywYG6+43afgE/8j/GoiNyygk/bnoCbps++3ErRKsIYkGGupyv07R2Ok5m9i67Iqc+T2g1eAUGUPzWhYTyg==
+
 source-map-support@^0.5.17:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
@@ -61,11 +66,6 @@ source-map@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
-
-teki@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/teki/-/teki-1.2.2.tgz#fe0d75dcb2bb93d39a8f31cc1e7f6bf5eb1aff76"
-  integrity sha512-VBJr3pgjK6Rfy0J5FVnDa1BpXnC0RBuTUXHY+dkQ5CIuPvpW8vTOktSJk3s+Z/HIZqjjbKzo2Kleci8p5X7+YA==
 
 ts-node@^9.1.1:
   version "9.1.1"

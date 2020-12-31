@@ -14,6 +14,24 @@ const server = http2.createSecureServer({
 
 const staticPath = path.resolve(__dirname, './static');
 
+/* TODO: make a hierarchy
+
+api {
+    v1 {
+        foo {
+            get("/:item")
+            post("/:item")
+        }
+    },
+    v2 {
+        post('bar')
+    }
+},
+* {
+
+}
+
+*/
 const router = new RouterFactory();
 router.get("/hello", (stream) => {
     stream.respond({ ":status": 200 });
@@ -21,14 +39,17 @@ router.get("/hello", (stream) => {
     stream.end();
 });
 
-router.get("/world", (stream) => {
-    stream.pipe(process.stdout);
+router.post("/search$", (stream) => {
+    stream.on('data', (chunk) => {
+        console.log(chunk);
+    });
+
+    //search.pipe(stream).respond({ 'content-type': 'application/json' });
 });
 
 router.post("/upload/:file", (stream, headers) => {
     const fullPath = path.join(staticPath, headers[':path'] as string);
-    const fswrite = fs.createWriteStream(fullPath)
-    stream.pipe(fswrite)
+    stream.pipe(fs.createWriteStream(fullPath))
 });
 
 router.get("/:file", (stream, headers) => {

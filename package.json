@@ -30,6 +30,6 @@
   "dependencies": {
     "@types/mime-types": "^2.1.0",
     "mime-types": "^2.1.27",
-    "teki": "^1.2.2"
+    "path-to-regexp": "^6.2.0"
   }
 }
