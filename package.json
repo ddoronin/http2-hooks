@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "play": "ts-node ./src/playground.ts",
+    "static-server": "ts-node ./src/examples/static-server.ts",
     "build": "rm -rf lib && tsc --declaration -p ./tsconfig.json --outDir lib/"
   },
   "repository": {

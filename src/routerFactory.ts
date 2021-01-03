@@ -17,28 +17,30 @@ const route404 = {
 }
 
 export class RouterFactory implements Http2Router {
-    public routes: Http2Route[] = [];
+    public readonly routes: Http2Route[] = []; 
 
-    constructor(public unknown: Http2Route = route404) {
+    constructor(
+        private readonly prefix: string = '',
+        public unknown: Http2Route = route404) {
     }
 
     get(path: string, handler: Http2Handler): RouterFactory {
-        this.routes.push({ method: 'GET', path, handler});
+        this.routes.push({ method: 'GET', path: (this.prefix + path), handler});
         return this;
     }
 
     post(path: string, handler: Http2Handler): RouterFactory {
-        this.routes.push({ method: 'POST', path, handler});
+        this.routes.push({ method: 'POST', path: (this.prefix + path), handler});
         return this;
     }
 
     put(path: string, handler: Http2Handler): RouterFactory {
-        this.routes.push({ method: 'PUT', path, handler});
+        this.routes.push({ method: 'PUT', path: (this.prefix + path), handler});
         return this;
     }
 
     delete(path: string, handler: Http2Handler): RouterFactory {
-        this.routes.push({ method: 'DELETE', path, handler});
+        this.routes.push({ method: 'DELETE', path: (this.prefix + path), handler});
         return this;
     }
 }

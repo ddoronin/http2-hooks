@@ -10,7 +10,10 @@ export class RouterHttp2Hook implements Http2Hook {
     public readonly name = 'RouterHttp2Hook';
     private readonly match: (reqMethod: string, reqPath: string) => [Route<ServerHttp2Stream, IncomingHttpHeaders>, RouteParams];
 
-    constructor(router: Router<ServerHttp2Stream, IncomingHttpHeaders>) {
+    constructor(router: Router<ServerHttp2Stream, IncomingHttpHeaders>, description: string = '') {
+        if (description.length > 0) {
+            this.name += ' ' + description;
+        }
         this.match = routeMatcher(router);
     }
 

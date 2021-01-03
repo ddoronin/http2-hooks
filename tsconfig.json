@@ -19,7 +19,10 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["es2017"],
     "types": ["node"],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "http2-hooks": ["./src/index.ts"]
+    }
   },
   "include": ["src/**/*"],
 }

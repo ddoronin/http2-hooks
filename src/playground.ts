@@ -13,33 +13,21 @@ const server = http2.createSecureServer({
 });
 
 const staticPath = path.resolve(__dirname, './static');
+const staticRouter = new RouterFactory('');
+staticRouter.get("/:files", (stream, headers) => {
+    const fullPath = path.join(staticPath, headers[':path'] as string);
+    const responseMimeType = mime.lookup(fullPath);
+    fs.createReadStream(fullPath).pipe(stream).respond({ 'content-type': responseMimeType as string });
+});
 
-/* TODO: make a hierarchy
-
-api {
-    v1 {
-        foo {
-            get("/:item")
-            post("/:item")
-        }
-    },
-    v2 {
-        post('bar')
-    }
-},
-* {
-
-}
-
-*/
-const router = new RouterFactory();
-router.get("/hello", (stream) => {
+const apiRouter = new RouterFactory('/api');
+apiRouter.get("/hello", (stream) => {
     stream.respond({ ":status": 200 });
     stream.write("hello world!");
     stream.end();
 });
 
-router.post("/search$", (stream) => {
+apiRouter.post("/search$", (stream) => {
     stream.on('data', (chunk) => {
         console.log(chunk);
     });
@@ -47,18 +35,13 @@ router.post("/search$", (stream) => {
     //search.pipe(stream).respond({ 'content-type': 'application/json' });
 });
 
-router.post("/upload/:file", (stream, headers) => {
+apiRouter.post("/upload/:file", (stream, headers) => {
     const fullPath = path.join(staticPath, headers[':path'] as string);
     stream.pipe(fs.createWriteStream(fullPath))
 });
 
-router.get("/:file", (stream, headers) => {
-    const fullPath = path.join(staticPath, headers[':path'] as string);
-    const responseMimeType = mime.lookup(fullPath);
-    fs.createReadStream(fullPath).pipe(stream).respond({ 'content-type': responseMimeType as string });
-});
-
 useHttp2Server(server, [
     new ConsoleMiddlewareHttp2Hook(),
-    new RouterHttp2Hook(router)
+    new RouterHttp2Hook(apiRouter, 'api'),
+    new RouterHttp2Hook(staticRouter, 'static'),
 ]).listen(1443);
